@@ -1,12 +1,12 @@
 import asyncio
 import json
 import typing as tp
-from datetime import datetime
 from itertools import chain
 
 import aiohttp
 
-EnhancedJsonType = tp.List[tp.Dict[str, tp.Union[str, int, datetime]]]
+EnhancedJsonEntry = tp.Dict[str, tp.Any]
+EnhancedJsonType = tp.List[EnhancedJsonEntry]
 
 
 class NameNormalizer:
@@ -28,7 +28,7 @@ class NameNormalizer:
         self._path = 'https://cleaner.dadata.ru/api/v1/clean/name'
         self._chunk_size = 50
 
-    async def multi_fetch_names(self, names: tp.List[str]) -> tp.List[str]:
+    async def multi_fetch_names(self, names: tp.List[str]) -> tp.List[tp.List[EnhancedJsonEntry]]:
         """
         Формирует пула батчей с ФИО для нормализации.(Размер батча продиктован требованиями со стороны API)
         :param names: набор ФИО

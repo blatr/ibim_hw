@@ -1,16 +1,14 @@
 import json
 import os
-import pickle as pkl
 import typing as tp
-from datetime import datetime
 from operator import itemgetter
 
-from pandas import json_normalize, ExcelWriter
+from pandas import json_normalize, ExcelWriter  # type: ignore
 
 from modules import *
 
 SOURCE_DATA_PATH = 'data/SourceData_JSON'
-EnhancedJsonType = tp.List[tp.Dict[str, tp.Union[str, int, datetime]]]
+EnhancedJsonType = tp.List[tp.Dict[str, tp.Any]]
 
 
 def read_source_data(source_name: str) -> EnhancedJsonType:

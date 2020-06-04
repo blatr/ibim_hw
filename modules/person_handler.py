@@ -1,11 +1,10 @@
 import re
 import typing as tp
 from collections import defaultdict
-from datetime import datetime
 from itertools import groupby
 from operator import itemgetter
 
-EnhancedJsonType = tp.List[tp.Dict[str, tp.Union[str, int, datetime]]]
+EnhancedJsonType = tp.List[tp.Dict[str, tp.Any]]
 
 
 def parse_age(df: EnhancedJsonType) -> EnhancedJsonType:
@@ -31,7 +30,7 @@ def cache_column_from_json(df: EnhancedJsonType, column_name: str) -> tp.Dict[st
     :return: словарь со значениями колонки
     :rtype: dict
     """
-    id_to_age_map = dict()
+    id_to_age_map: tp.Dict[str, int] = dict()
     for entry in df:
         id_to_age_map[entry['ID']] = entry[column_name]
     return id_to_age_map
@@ -73,7 +72,7 @@ def find_lost_surnames_in_bigdata(small_df: EnhancedJsonType, big_df: EnhancedJs
 
 
 def find_namesakes_with_10_years_difference(df: EnhancedJsonType) -> \
-        tp.List[tp.Tuple[EnhancedJsonType, EnhancedJsonType]]:
+        tp.List[tp.Tuple[tp.Dict[str, tp.Any], tp.Dict[str, tp.Any]]]:
     """
     Находит пары людей с разницей в возрасте 10 лет.
     :param df: набор данных
@@ -85,13 +84,13 @@ def find_namesakes_with_10_years_difference(df: EnhancedJsonType) -> \
     namesakes_pairs = []
 
     for key, group in groupby(df, key=itemgetter('Surname')):
-        group = list(group)
-        seen_ages = defaultdict(list)
+        materialized_group = list(group)
+        seen_ages: tp.Dict[str, tp.List[int]] = defaultdict(list)
 
-        for group_idx, entry in enumerate(group):
+        for group_idx, entry in enumerate(materialized_group):
             for potential_namesake in [entry['Age'] - 10, entry['Age'] + 10]:
                 for idx in seen_ages[potential_namesake]:
-                    namesakes_pairs.append((entry, group[idx]))
+                    namesakes_pairs.append((entry, materialized_group[idx]))
 
             seen_ages[entry['Age']].append(group_idx)
     return namesakes_pairs
