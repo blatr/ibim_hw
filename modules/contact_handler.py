@@ -114,7 +114,7 @@ def count_contacts_per_age_group(df: EnhancedJsonType, age_dict: tp.Dict[str, in
                                             age_dict[potential_member]]
         if member_contacts_per_age_group > max_contacts_per_age_group:
             max_contacts_per_age_group = member_contacts_per_age_group
-            max_age_group = age_dict[entry['Member1_ID']]
+            max_age_group = age_dict[potential_member]
 
     members_per_age_group = SizableDict()
     contacts_per_age_group = SizableDict()

@@ -9,7 +9,7 @@ EnhancedJsonType = tp.List[tp.Dict[str, tp.Any]]
 
 def parse_age(df: EnhancedJsonType) -> EnhancedJsonType:
     """
-    Конвертирует поле возраст в тип int.
+    Конвертирует поле Age в тип int.
     :param df: набор данных
     :type df: EnhancedJsonType
     :return: обработанный набор данных
@@ -41,7 +41,7 @@ def find_mistyped_entries(df: EnhancedJsonType) -> EnhancedJsonType:
     Находит записи в наборе данных, в которых присутствуют латинские буквы и заменяет их на кириллицу.
     :param df: набор данных
     :type df: EnhancedJsonType
-    :return: обработныый набор данных
+    :return: Записи, в которых встретились латинские буквы.
     :rtype: EnhancedJsonType
     """
     mistyped_names = []
@@ -74,10 +74,10 @@ def find_lost_surnames_in_bigdata(small_df: EnhancedJsonType, big_df: EnhancedJs
 def find_namesakes_with_10_years_difference(df: EnhancedJsonType) -> \
         tp.List[tp.Tuple[tp.Dict[str, tp.Any], tp.Dict[str, tp.Any]]]:
     """
-    Находит пары людей с разницей в возрасте 10 лет.
+    Находит пары однофамильцев с разницей в возрасте 10 лет.
     :param df: набор данных
     :type df: EnhancedJsonType
-    :return: Пары людей
+    :return: пары однофамильцев
     :rtype: list
     """
     df = sorted(df, key=itemgetter('Surname', 'Age'))

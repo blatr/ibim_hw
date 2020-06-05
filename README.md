@@ -57,5 +57,5 @@ ibim_hw/
 приятный интерфейс обеих библиотек.
 * Нормализация через API была сделана, поскольку не удалось найти нормальзую базу имен и фамилий, чтобы однозначно 
 определять, где имя, а где фамилия. Были попытки решить задачу регулярками, библиотеками 
-[Pymorphy2](https://github.com/kmike/pymorphy2) и [Russiannames](https://github.com/datacoon/russiannames), но 100% 
-результата ни один способ не дал. 
+[Pymorphy2](https://github.com/kmike/pymorphy2) и [Russiannames](https://github.com/datacoon/russiannames), но наилучший
+(хотя и не идеальный) результат был однозначно у выбранного API.

@@ -72,7 +72,7 @@ def process_person_df(target: tp.Tuple[str, str], sorting_column: str) -> Enhanc
     write_to_file(file=mistyped_entries, target_name=f'1.7 {target_name}', write_mode='w')
 
     person_df = sorted(name_norm.normalize_names(person_df), key=itemgetter(sorting_column))
-    write_to_file(file=person_df, target_name='resulting_data', write_mode='a', to_excel=True,
+    write_to_file(file=person_df, target_name='1.4 resulting_data', write_mode='a', to_excel=True,
                   sheet_name=data_type)
 
     namesakes_df = find_namesakes_with_10_years_difference(person_df)
@@ -82,7 +82,7 @@ def process_person_df(target: tp.Tuple[str, str], sorting_column: str) -> Enhanc
 
 def process_contact_df(target: tp.Tuple[str, str], person_df: EnhancedJsonType) -> None:
     """
-     Обрабатывает набор данных Contact.
+    Обрабатывает набор данных Contact.
     :param target: название файла с набором данных\\тип набора
     :type target: tuple
     :param person_df: обработанный набор данных Person
@@ -110,11 +110,6 @@ def process_contact_df(target: tp.Tuple[str, str], person_df: EnhancedJsonType) 
 if __name__ == '__main__':
     person_small = process_person_df(('small_data_persons', 'small_data'), 'Surname')
     person_big = process_person_df(('big_data_persons', 'big_data'), 'Name')
-
-    # with open('tmp_small.pkl', 'rb') as f:
-    #     person_small = pkl.load(f)
-    # with open('tmp_big.pkl', 'rb') as f:
-    #     person_big = pkl.load(f)
 
     lost_surnames = find_lost_surnames_in_bigdata(person_small, person_big)
     write_to_file(file=lost_surnames, target_name='1.5 lost_surnames', write_mode='w')
